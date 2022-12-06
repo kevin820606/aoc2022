@@ -43,10 +43,7 @@ def action_parser(aoc: AOCFILE) -> list[Instruction]:
 def get_last_cargo(crates: STORAGE) -> str:
     final_string:str = ""
     for last_item in crates.values():
-        try:
-            final_string += last_item.pop()
-        except IndexError:
-            final_string += ""
+        final_string += last_item.pop()
     final_string = re.sub("\[|\]", "", final_string)
     return final_string
 
@@ -55,9 +52,6 @@ crates = crate_parser(aoc=aoc_5)
 instructions = action_parser(aoc=aoc_5)
 
 def Q1() -> None:
-    aoc_5 = read_aoc(5, strip=False)
-    crates = crate_parser(aoc=aoc_5)
-    instructions = action_parser(aoc=aoc_5)
     for move, start, end in instructions:
         for _ in range(move):
             crates[end].append(crates[start].pop())
