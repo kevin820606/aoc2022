@@ -43,6 +43,8 @@ def action_parser(aoc: AOCFILE) -> list[Instruction]:
 def get_last_cargo(crates: STORAGE) -> str:
     final_string:str = ""
     for last_item in crates.values():
+        if not last_item:
+            continue
         final_string += last_item.pop()
     final_string = re.sub("\[|\]", "", final_string)
     return final_string
