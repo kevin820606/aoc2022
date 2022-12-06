@@ -19,8 +19,8 @@ def crate_parser(aoc: AOCFILE) -> STORAGE:
             lines_index = map(int, re.findall('\d', line))
             storage: STORAGE = {num: list() for num in range(1, max(lines_index)+ 1)}
             break
-
         raw_lines.append(line.replace("\n", " "))
+
     stacks = raw_lines[::-1]
     for layer in stacks:
         each_line: list[str] = re.findall(pattern="(\[\D\]|\s{3})\s", string=layer)
