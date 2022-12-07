@@ -10,7 +10,7 @@ def question(question_n:int, information_len:int) -> None:
         if len(set(check_str + char)) < information_len:
             check_str = check_str[1:] + char
             continue
-        print_ans(1, loc)
+        print_ans(question_n, loc)
         break
 
 
