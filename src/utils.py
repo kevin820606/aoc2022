@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 from typing import Generator, Any
-from pprint import pprint
+from pprint import pprint as print
 
 
 AOCFILE = Generator[str, None, None]
@@ -14,4 +14,4 @@ def read_aoc(day: int, strip:bool = True) -> AOCFILE:
                 yield line
 
 def print_ans(question_number:int, ans: Any) -> None:
-    pprint(f"Q{question_number} ans is {ans}.")
+    print(f"Q{question_number} ans is {ans}.")
