@@ -1,9 +1,7 @@
 from src.utils import print_ans, read_aoc, AOCFILE
 from typing import NamedTuple
-from enum import Enum, auto
+from enum import Enum
 from dataclasses import dataclass, field
-from pprint import pprint
-
 
 class Coordinate(NamedTuple):
     x: int
