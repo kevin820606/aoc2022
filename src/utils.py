@@ -5,8 +5,9 @@ from pprint import pprint as print
 
 AOCFILE = Generator[str, None, None]
 
-def read_aoc(day: int, strip:bool = True) -> AOCFILE:
-    with open(f"data/data_{day}.txt", mode = "r") as dayfile:
+def read_aoc(day: int, strip:bool = True, use_test_data:bool = False) -> AOCFILE:
+    suffix = "_test" if use_test_data else ""
+    with open(f"data/data_{day}{suffix}.txt", mode = "r") as dayfile:
         for line in dayfile.readlines():
             if strip:
                 yield line.strip()
