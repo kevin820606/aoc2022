@@ -7,6 +7,7 @@ class Coordinate(NamedTuple):
 
 
 class Node(TypedDict, total=False):
+    name:str
     coord: Coordinate
     children: list[Coordinate]
     parents: set[Coordinate]
@@ -16,21 +17,24 @@ class Node(TypedDict, total=False):
 
 
 def get_coords(
-    aoc_file: AOCFILE,
-) -> tuple[dict[Coordinate, Node], Coordinate, Coordinate]:
+    aoc_file: AOCFILE, start_sign:list[str]
+) -> tuple[dict[Coordinate, Node], list[Coordinate], Coordinate]:
+    starts = []
     all_coord: dict[Coordinate, Node] = dict()
+
     for y, line in enumerate(aoc_file):
         for x, word in enumerate(line):
             height = ord(word) - 96
             coord = Coordinate(x, y)
-            if word == "S":
+            if word in start_sign:
                 height = 1
-                start = coord
+                starts.append(coord)
             if word == "E":
                 height = 27
                 end = coord
             all_coord |= {
                 coord: Node(
+                    name = word,
                     coord=coord,
                     height=height,
                     children=[],
@@ -39,7 +43,7 @@ def get_coords(
                     distance_from_start=1000000
                 )
             }
-    return (all_coord, start, end)
+    return (all_coord, starts, end)
 
 
 class Map:
@@ -70,17 +74,17 @@ class Map:
         layer = 1
         next_layer_nodes:list[Coordinate] = []
         self.checked_list = []
+
         while children:
             node = children.pop(0)
-
             self.checked_list.append(node)
+
             for child in self.nodes[node]["children"]:
                 if child not in self.checked_list:
                     next_layer_nodes.append(child)
 
             if self.end in next_layer_nodes:
-                print(node)
-                print(layer + 1)
+                self.min = layer
                 break
 
             if not children:
@@ -90,11 +94,32 @@ class Map:
 
 def Q1():
     aoc_file = read_aoc(12)
-    all_cord, start, end = get_coords(aoc_file=aoc_file)
+    all_cord, starts, end = get_coords(aoc_file=aoc_file, start_sign=["S"])
     questionmap = Map(nodes=all_cord, end = end)
-    questionmap.nodes[start]["distance_from_start"] = 0
     questionmap.get_node_chain()
-    questionmap.get_start_to_end(start=start)
+    for start in starts:
+        print(start)
+        questionmap.get_start_to_end(start=start)
+        print_ans(1, questionmap.min)
+
+def Q2():
+    aoc_file = read_aoc(12)
+    all_coord, starts, end = get_coords(aoc_file=aoc_file, start_sign=["S", "a"])
+    questionmap = Map(nodes=all_coord, end = end)
+    min = 1000000
+    check_list = []
+    questionmap.get_node_chain()
+    while starts:
+        start = starts.pop(0)
+        if not check_list:
+            questionmap.get_start_to_end(start=start)
+            check_list.extend(questionmap.checked_list)
+        if not start in check_list:
+            continue
+        if questionmap.min < min:
+            min = questionmap.min
+    print_ans(2, min)
 
 if __name__ == "__main__":
     Q1()
+    Q2()
