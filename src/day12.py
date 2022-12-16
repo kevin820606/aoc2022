@@ -1,10 +1,5 @@
-from src.utils import print_ans, read_aoc, AOCFILE
+from src.utils import print_ans, read_aoc, AOCFILE, Coordinate
 from typing import TypedDict, NamedTuple
-
-class Coordinate(NamedTuple):
-    x: int
-    y: int
-
 
 class Node(TypedDict, total=False):
     name:str
