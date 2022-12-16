@@ -164,7 +164,7 @@ class SandFlow:
             moving_sand = next_left
             next_point = moving_sand + complex(0, 1)
             return moving_sand, next_point
-        elif self.struct[next_right].pttype == PointType.AIR:
+        if self.struct[next_right].pttype == PointType.AIR:
             self._block_exchange(moving=moving_sand, moved=next_right)
             moving_sand = next_right
             next_point = moving_sand + complex(0, 1)
