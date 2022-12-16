@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 from typing import Generator, Any
 from pprint import pprint as print
-
+from typing import NamedTuple
 
 AOCFILE = Generator[str, None, None]
 
@@ -16,3 +16,7 @@ def read_aoc(day: int, strip:bool = True, use_test_data:bool = False) -> AOCFILE
 
 def print_ans(question_number:int, ans: Any) -> None:
     print(f"Q{question_number} ans is {ans}.")
+
+class Coordinate(NamedTuple):
+    x: int
+    y: int
